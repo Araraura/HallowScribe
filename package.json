@@ -6,6 +6,14 @@
     "Araraura (https://www.youtube.com/@DailySilksongNews)",
     "mossbag (https://www.youtube.com/@mossbag69)"
   ],
+  "homepage": "https://github.com/Araraura/HallowScribe",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Araraura/HallowScribe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Araraura/HallowScribe/issues"
+  },
   "private": true,
   "license": "AGPL-3.0-or-later",
   "type": "module",

@@ -15,7 +15,9 @@ export class Help {
 const helpEmbed = (botAvatar: string) => new EmbedBuilder()
   .setColor(embedColor)
   .setTitle("HallowScribe - List of Commands")
-  .setDescription("This bot allows you to pull any piece of text from Hollow Knight, sorted by different commands and categories.")
+  .setDescription(`
+  This bot allows you to pull any piece of text from Hollow Knight, sorted by different commands and categories.\n
+  [Report bugs here](${PackageJson.bugs.url})`)
   .setThumbnail(botAvatar)
   .setFields(
     { name: "• Dialogue from NPCs", value: "`/npcs <Type> [Name*] [Category*] [Dialogue*]`" },
