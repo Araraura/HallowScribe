@@ -3,12 +3,12 @@ import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
 import { capitalize, embedColor, errorEmbed } from "../utils.js";
 import { promises as fs } from "fs";
 
-const merchantsDirectoryPath = "./src/json/NPCs/Merchants/";
-const wanderersDirectoryPath = "./src/json/NPCs/Wanderers/";
-const questDirectoryPath = "./src/json/NPCs/Quest/";
-const dreamWarriorsDirectoryPath = "./src/json/NPCs/Dream Warriors/";
-const spiritsDirectoryPath = "./src/json/NPCs/Spirits/";
-const miscDirectoryPath = "./src/json/NPCs/Miscellaneous/";
+const merchantsDirectoryPath = "./src/json/NPCs/Merchants";
+const wanderersDirectoryPath = "./src/json/NPCs/Wanderers";
+const questDirectoryPath = "./src/json/NPCs/Quest";
+const dreamWarriorsDirectoryPath = "./src/json/NPCs/Dream Warriors";
+const spiritsDirectoryPath = "./src/json/NPCs/Spirits";
+const miscDirectoryPath = "./src/json/NPCs/Miscellaneous";
 
 const merchantsNpc: string[] = [];
 const wanderersNpc: string[] = [];
@@ -283,20 +283,20 @@ const findCategory = async (interaction: AutocompleteInteraction, directoryPath:
 };
 
 const findDialogue = async (interaction: AutocompleteInteraction, directoryPath: string) => {
-  const ChosenName = capitalize(interaction.options.getString("name")!.replaceAll(" ", "_"));
-  const ChosenCategory = capitalize(interaction.options.getString("category")!);
-  if (!ChosenName || !ChosenCategory) {
+  const chosenName = capitalize(interaction.options.getString("name")!).replaceAll(" ", "_");
+  const chosenCategory = capitalize(interaction.options.getString("category")!);
+  if (!chosenName || !chosenCategory) {
     return await interaction.respond([]);
   }
 
-  const npcFile = JSON.parse(await fs.readFile(`${directoryPath}/NPC_${ChosenName}.json`, "utf-8")) as {
+  const npcFile = JSON.parse(await fs.readFile(`${directoryPath}/NPC_${chosenName}.json`, "utf-8")) as {
     name: string;
     category: string;
     text: string;
   }[];
 
   const filtered = npcFile
-    .filter(npcDialogue => capitalize(npcDialogue.category) === ChosenCategory)
+    .filter(npcDialogue => capitalize(npcDialogue.category) === chosenCategory)
     .map(npcDialogue => ({ name: npcDialogue.name, value: npcDialogue.name }))
     .filter(c => capitalize(c.name).startsWith(capitalize(interaction.options.getFocused())))
     .slice(startSlice, endSlice);
