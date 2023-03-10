@@ -1,4 +1,4 @@
-# WatchLyst
+# HallowScribe
 
 <p align="center">
   <img src="https://i.imgur.com/YldROEX.png" alt="HallowScribe Logo"/>
