@@ -4,6 +4,7 @@ import { AutocompleteInteraction, EmbedBuilder } from "discord.js";
 const embedColor = "#32c192";
 
 const capitalize = (string: string) => {
+  if (typeof string !== "string") return "";
   return string.trim().split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(" ").replaceAll(" Of ", " of ").replaceAll(" The ", " the ");
 };
 
