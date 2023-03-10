@@ -266,11 +266,11 @@ const endSlice = 25;
 
 const findCategory = async (interaction: AutocompleteInteraction, directoryPath: string) => {
   const enteredName = interaction.options.getString("name");
-  if (enteredName === null) {
+  if (!enteredName) {
     return await interaction.respond([]);
   }
 
-  const npcName = capitalize(enteredName).replaceAll(" ", "_");
+  const npcName = enteredName.replaceAll(" ", "_");
   const npcFile = JSON.parse(await fs.readFile(`${directoryPath}/NPC_${npcName}.json`, "utf-8")) as {
     name: string;
     category: string;
