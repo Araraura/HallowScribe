@@ -28,6 +28,7 @@ module.exports = {
     "comma-style": "error",
     "curly": ["error", "multi-line", "consistent"],
     "dot-location": ["error", "property"],
+    "eol-last": ["error", "always"],
     "indent": ["error", 2],
     "keyword-spacing": "error",
     "max-nested-callbacks": ["error", { "max": 3 }],
