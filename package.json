@@ -1,6 +1,6 @@
 {
   "name": "hallowscribe",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Discord bot that lets users easily pull and display any kind of text from Hollow Knight.",
   "contributors": [
     "Araraura (https://www.youtube.com/@DailySilksongNews)",
@@ -28,16 +28,16 @@
     "clean": "rimraf build/"
   },
   "dependencies": {
-    "@discordx/importer": "^1.1.10",
-    "discord.js": "^14.7.1",
+    "@discordx/importer": "^1.2.1",
+    "discord.js": "^14.8.0",
     "discordx": "^11.7.1",
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
-    "@types/node": "^18.15.0",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
-    "@typescript-eslint/parser": "^5.54.1",
-    "eslint": "^8.35.0",
+    "@types/node": "^18.15.3",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
     "eslint-plugin-node": "^11.1.0",
     "nodemon": "^2.0.21",
     "rimraf": "^4.4.0",
