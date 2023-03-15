@@ -56,8 +56,9 @@ export class CutContent {
 
 const cutContentEmbed = (cutContentName: string, cutContentCategory: string, cutContentText: string) => new EmbedBuilder()
   .setColor(embedColor)
-  .setTitle(`${cutContentName} - ${cutContentCategory}`)
-  .setDescription(cutContentText);
+  .setTitle(`Cut content: ${cutContentName} - ${cutContentCategory}`)
+  .setDescription(cutContentText)
+  .setFooter({ text: "Note: Cut content should not be considered canon." });
 
 const startSlice = 0;
 const endSlice = 25;
