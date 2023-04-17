@@ -1,3 +1,7 @@
+### 1.0.3 - April 17 2023
+- Updated packages
+- Bot status now resets once an hour (Fixes a bug where the status would disappear after starting bot)
+
 ### 1.0.2 - March 15 2023
 - Added "Cut content:" text to the `/cut-content` embed's title, as well as a notice in the footer
 - Updated packages and discord.js to 14.8.0
