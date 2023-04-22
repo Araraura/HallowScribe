@@ -1,3 +1,9 @@
+### 1.0.4 - April 22 2023
+- Added `/about` command
+- Added [MarcelSteak](https://twitter.com/MarcelSteak3) to the list of contributors in `package.json`
+- Moved Oro, Mato & Sheo from Quest to Misc
+- Moved the White Lady, the Pale King and Snail Shaman from Misc to Quest
+
 ### 1.0.3 - April 17 2023
 - Updated packages
 - Bot status now resets once an hour (Fixes a bug where the status would disappear after starting bot)
