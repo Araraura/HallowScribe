@@ -261,9 +261,6 @@ const npcEmbed = (npcName: string, npcText: string, dialogueCategory: string, np
   .setDescription(npcText)
   .setThumbnail(npcImage);
 
-const startSlice = 0;
-const endSlice = 25;
-
 const findCategory = async (interaction: AutocompleteInteraction, directoryPath: string) => {
   const enteredName = interaction.options.getString("name");
   if (!enteredName) {
@@ -279,7 +276,7 @@ const findCategory = async (interaction: AutocompleteInteraction, directoryPath:
 
   const categories = [...new Set(npcFile.map(npc => npc.category))];
   const filtered = categories.filter(c => capitalize(c).startsWith(capitalize(interaction.options.getFocused())));
-  await interaction.respond(filtered.map(c => ({ name: c, value: c })).slice(startSlice, endSlice));
+  await interaction.respond(filtered.map(c => ({ name: c, value: c })).slice(0, 25));
 };
 
 const findDialogue = async (interaction: AutocompleteInteraction, directoryPath: string) => {
@@ -299,7 +296,7 @@ const findDialogue = async (interaction: AutocompleteInteraction, directoryPath:
     .filter(npcDialogue => capitalize(npcDialogue.category) === chosenCategory)
     .map(npcDialogue => ({ name: npcDialogue.name, value: npcDialogue.name }))
     .filter(c => capitalize(c.name).startsWith(capitalize(interaction.options.getFocused())))
-    .slice(startSlice, endSlice);
+    .slice(0, 25);
 
   await interaction.respond(filtered);
 };

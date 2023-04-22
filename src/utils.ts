@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, no-magic-numbers */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AutocompleteInteraction, EmbedBuilder } from "discord.js";
 
 const embedColor = "#32c192";
