@@ -54,3 +54,5 @@ Note: The JSON files containing the text from Hollow Knight are not included in 
 - `/dev-note [Category*] [Note*]` Text from developer notes found in the game files
 
 - `/cut-content [Type*] [Category*] [Name*]` Text from cut content found in the game files
+
+- `/about` Shows information about the bot and its usage
