@@ -34,7 +34,7 @@ const aboutEmbed = (botAvatar: string) => new EmbedBuilder()
   .setTitle("HallowScribe")
   .setURL(PackageJson.homepage)
   .setDescription(`
-  This bot allows you to pull any piece of text from Hollow Knight, sorted by different commands and categories.\n
+  This bot allows you to pull and display any piece of text from Hollow Knight, sorted by different commands and categories.\n
   If you find any errors or have any suggestions, you can [tell us here](${PackageJson.bugs.url}).`)
   .setThumbnail(botAvatar)
   .setFields({ name: "\u200B", value: "__Credits:__" })

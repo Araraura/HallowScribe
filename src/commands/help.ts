@@ -16,7 +16,7 @@ const helpEmbed = (botAvatar: string) => new EmbedBuilder()
   .setColor(embedColor)
   .setTitle("HallowScribe - List of Commands")
   .setDescription(`
-  This bot allows you to pull any piece of text from Hollow Knight, sorted by different commands and categories.\n
+  This bot allows you to pull and display any piece of text from Hollow Knight, sorted by different commands and categories.\n
   [Report bugs here](${PackageJson.bugs.url})`)
   .setThumbnail(botAvatar)
   .setFields(
