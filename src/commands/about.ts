@@ -1,6 +1,6 @@
 import { APIEmbedField, CommandInteraction, EmbedBuilder, RestOrArray } from "discord.js";
 import { Discord, Slash } from "discordx";
-import PackageJson from "../../package.json" assert { type: "json" };
+import PackageJSON from "../../package.json" assert { type: "json" };
 import { embedColor } from "../utils.js";
 
 @Discord()
@@ -32,11 +32,11 @@ function formatContributors(input: string[]): RestOrArray<APIEmbedField> {
 const aboutEmbed = (botAvatar: string) => new EmbedBuilder()
   .setColor(embedColor)
   .setTitle("HallowScribe")
-  .setURL(PackageJson.homepage)
+  .setURL(PackageJSON.homepage)
   .setDescription(`
   This bot allows you to pull and display any piece of text from Hollow Knight, sorted by different commands and categories.\n
-  If you find any errors or have any suggestions, you can [tell us here](${PackageJson.bugs.url}).`)
+  If you find any errors or have any suggestions, you can [tell us here](${PackageJSON.bugs.url}).`)
   .setThumbnail(botAvatar)
   .setFields({ name: "\u200B", value: "__Credits:__" })
-  .addFields(...formatContributors(PackageJson.contributors))
-  .setFooter({ text: `Version ${PackageJson.version}` });
+  .addFields(...formatContributors(PackageJSON.contributors))
+  .setFooter({ text: `Version ${PackageJSON.version}` });

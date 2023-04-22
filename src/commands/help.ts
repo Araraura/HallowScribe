@@ -1,6 +1,6 @@
 import { CommandInteraction, EmbedBuilder } from "discord.js";
 import { Discord, Slash } from "discordx";
-import PackageJson from "../../package.json" assert { type: "json" };
+import PackageJSON from "../../package.json" assert { type: "json" };
 import { embedColor } from "../utils.js";
 
 @Discord()
@@ -17,7 +17,7 @@ const helpEmbed = (botAvatar: string) => new EmbedBuilder()
   .setTitle("HallowScribe - List of Commands")
   .setDescription(`
   This bot allows you to pull and display any piece of text from Hollow Knight, sorted by different commands and categories.\n
-  [Report bugs here](${PackageJson.bugs.url})`)
+  [Report bugs here](${PackageJSON.bugs.url})`)
   .setThumbnail(botAvatar)
   .setFields(
     { name: "• Dialogue from NPCs", value: "`/npcs <Type> [Name*] [Category*] [Dialogue*]`" },
@@ -38,4 +38,4 @@ const helpEmbed = (botAvatar: string) => new EmbedBuilder()
     { name: "• Cut content found in the game files", value: "`/cut-content [Type*] [Category*] [Name*]`" },
     { name: "• Shows information about the bot and its usage", value: "`/about`" },
   )
-  .setFooter({ text: `Version ${PackageJson.version}\nHallowScribe made by Araraura#0001 & mossbag#0563\nIcon by @MarcelSteak3` });
+  .setFooter({ text: `Version ${PackageJSON.version}\nHallowScribe made by Araraura#0001 & mossbag#0563\nIcon by @MarcelSteak3` });
