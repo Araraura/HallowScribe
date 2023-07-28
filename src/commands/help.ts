@@ -38,4 +38,4 @@ const helpEmbed = (botAvatar: string) => new EmbedBuilder()
     { name: "• Cut content found in the game files", value: "`/cut-content [Type*] [Category*] [Name*]`" },
     { name: "• Shows information about the bot and its usage", value: "`/about`" },
   )
-  .setFooter({ text: `Version ${PackageJSON.version}\nHallowScribe made by Araraura#0001 & mossbag#0563\nIcon by @MarcelSteak3` });
+  .setFooter({ text: `Version ${PackageJSON.version}\nHallowScribe made by Araraura & mossbag\nIcon by @MarcelSteak3` });

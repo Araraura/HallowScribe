@@ -9,8 +9,8 @@
 A Discord bot that lets users easily pull and display any kind of text from Hollow Knight, sorted by different commands and categories.
 
 Made by 
-<a href="https://www.youtube.com/@DailySilksongNews">Araraura#0001</a> &
-<a href="https://www.youtube.com/@mossbag69">mossbag#0563</a>
+<a href="https://www.youtube.com/@DailySilksongNews">Araraura</a> &
+<a href="https://www.youtube.com/@mossbag69">mossbag</a>
 
 ![Commands Example](https://i.imgur.com/SBB8U5l.png "Commands Example")
 ![Dialogue Example](https://i.imgur.com/KEfX26o.png "Dialogue Example")
