@@ -12,7 +12,7 @@ export class About {
   }
 }
 
-function formatContributors(input: string[]): RestOrArray<APIEmbedField> {
+const formatContributors = (input: string[]) => {
   const fields: RestOrArray<APIEmbedField> = [];
 
   for (const str of input) {
