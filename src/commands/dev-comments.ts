@@ -22,7 +22,7 @@ export class DevComments {
       description: "The source of the dev comment",
       required: true,
     })
-      devCommentSource: string,
+    devCommentSource: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await filteredCategory(interaction, "source", interaction.options.getString("source")!, devCommentsList);
@@ -32,8 +32,8 @@ export class DevComments {
       description: "The name of the dev comment",
       required: true,
     })
-      comment: string,
-      interaction: CommandInteraction): Promise<void> {
+    comment: string,
+    interaction: CommandInteraction): Promise<void> {
     const commentName = capitalize(comment);
     const commentDetails = devCommentsList.find((c: { name: string; }) => capitalize(c.name) === commentName);
     if (!commentDetails) {
@@ -47,4 +47,18 @@ export class DevComments {
 const devCommentEmbed = (devCommentName: string, devCommentText: string, devCommentSourceLink: string) => new EmbedBuilder()
   .setColor(embedColor)
   .setTitle(`Developer comment: ${devCommentName}`)
-  .setDescription(`${devCommentText}\n\n[Source](${devCommentSourceLink})`);
+  .setDescription(`${devCommentText}\n\n${processSourceLink(devCommentSourceLink)}`);
+
+const processSourceLink = (linkString: string) => {
+  const sourceLinks = linkString.split("%%LINK_SEPARATOR%%");
+
+  if (sourceLinks.length === 1) {
+    return `[Source](${sourceLinks[0]})`;
+  } else {
+    const sources: string[] = [];
+    for (let i = 0; i < sourceLinks.length; i++) {
+      sources.push(`[Source ${i + 1}](${sourceLinks[i]})`);
+    }
+    return sources.join(" | ");
+  }
+};
