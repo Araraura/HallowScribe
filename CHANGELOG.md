@@ -1,3 +1,7 @@
+### 1.0.5 - July 28 2023
+- Multiple links/sources can now be used in `/dev-comments`
+- Removed old Discord descriminators from credits
+
 ### 1.0.4 - April 22 2023
 - Added `/about` command
 - Added [MarcelSteak](https://twitter.com/MarcelSteak3) to the list of contributors in `package.json`
