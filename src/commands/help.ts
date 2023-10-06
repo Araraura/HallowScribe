@@ -17,7 +17,7 @@ const helpEmbed = (botAvatar: string) => new EmbedBuilder()
   .setTitle("HallowScribe - List of Commands")
   .setDescription(`
   This bot allows you to pull and display any piece of text from Hollow Knight, sorted by different commands and categories.\n
-  [Report bugs here](${PackageJSON.bugs.url})`)
+  [Report bugs or suggest improvements here](${PackageJSON.bugs.url})`)
   .setThumbnail(botAvatar)
   .setFields(
     { name: "• Dialogue from NPCs", value: "`/npcs <Type> [Name*] [Category*] [Dialogue*]`" },
