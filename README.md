@@ -13,7 +13,7 @@ Made by
 <a href="https://www.youtube.com/@mossbag69">mossbag</a>
 
 ![Commands Example](https://i.imgur.com/SBB8U5l.png "Commands Example")
-![Dialogue Example](https://i.imgur.com/KEfX26o.png "Dialogue Example")
+![Dialogue Example](https://i.imgur.com/neZyAz9.png "Dialogue Example")
 
 ### [Invite HallowScribe to your server](https://discord.com/api/oauth2/authorize?client_id=1079808512986714133&permissions=2048&scope=bot%20applications.commands)
 Note: The JSON files containing the text from Hollow Knight are not included in this repository. Hollow Knight is the intellectual property of Team Cherry, and as such the text cannot be included here.
