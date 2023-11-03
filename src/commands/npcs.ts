@@ -1,6 +1,6 @@
-import { ApplicationCommandOptionType, AutocompleteInteraction, CommandInteraction, EmbedBuilder } from "discord.js";
-import { Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
-import { capitalize, embedColor, errorEmbed } from "../utils.js";
+import { ApplicationCommandOptionType, AutocompleteInteraction, ButtonInteraction, CommandInteraction, EmbedBuilder } from "discord.js";
+import { ButtonComponent, Discord, Slash, SlashChoice, SlashGroup, SlashOption } from "discordx";
+import { capitalize, embedColor, errorEmbed, previewConfirmText, sendButtonComponent } from "../utils.js";
 import { promises as fs } from "fs";
 
 const merchantsDirectoryPath = "./src/json/NPCs/Merchants";
@@ -41,9 +41,17 @@ const miscNpc: string[] = [];
   miscNpc.push(file.replace(/^NPC_|\.json$/g, "").replaceAll("_", " "));
 });
 
+const sendCustomId = "sendNpc";
+
 @Discord()
 @SlashGroup({ description: "Shows dialogue from NPCs", name: "npcs" })
 export class NPCs {
+  @ButtonComponent({ id: sendCustomId })
+  async sendButtonPressed(interaction: ButtonInteraction): Promise<void> {
+    await interaction.update({ components: [sendButtonComponent(sendCustomId, true)] });
+    await interaction.channel?.send({ embeds: [interaction.message.embeds[0]] });
+  }
+
   @Slash({ description: "Shows dialogue from merchants NPCs" })
   @SlashGroup("npcs")
   async merchants(
@@ -54,7 +62,7 @@ export class NPCs {
       description: "The name of the NPC",
       required: true,
     })
-      npc: string,
+    npc: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findCategory(interaction, merchantsDirectoryPath);
@@ -64,7 +72,7 @@ export class NPCs {
       description: "The category of the dialogue",
       required: true,
     })
-      category: string,
+    category: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findDialogue(interaction, merchantsDirectoryPath);
@@ -74,9 +82,9 @@ export class NPCs {
       description: "The dialogue of this NPC",
       required: true,
     })
-      dialogue: string,
-      interaction: CommandInteraction): Promise<void> {
-    await sendText(interaction, npc, category, dialogue, merchantsDirectoryPath);
+    dialogue: string,
+    interaction: CommandInteraction): Promise<void> {
+    await sendText(interaction, npc, category, dialogue, merchantsDirectoryPath, "merchants");
   }
 
   @Slash({ description: "Shows dialogue from wanderers NPCs" })
@@ -89,7 +97,7 @@ export class NPCs {
       description: "The name of the NPC",
       required: true,
     })
-      npc: string,
+    npc: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findCategory(interaction, wanderersDirectoryPath);
@@ -99,7 +107,7 @@ export class NPCs {
       description: "The category of the dialogue",
       required: true,
     })
-      category: string,
+    category: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findDialogue(interaction, wanderersDirectoryPath);
@@ -109,9 +117,9 @@ export class NPCs {
       description: "The dialogue of this NPC",
       required: true,
     })
-      dialogue: string,
-      interaction: CommandInteraction): Promise<void> {
-    await sendText(interaction, npc, category, dialogue, wanderersDirectoryPath);
+    dialogue: string,
+    interaction: CommandInteraction): Promise<void> {
+    await sendText(interaction, npc, category, dialogue, wanderersDirectoryPath, "wanderers");
   }
 
   @Slash({ description: "Shows dialogue from quest NPCs" })
@@ -124,7 +132,7 @@ export class NPCs {
       description: "The name of the NPC",
       required: true,
     })
-      npc: string,
+    npc: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findCategory(interaction, questDirectoryPath);
@@ -134,7 +142,7 @@ export class NPCs {
       description: "The category of the dialogue",
       required: true,
     })
-      category: string,
+    category: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findDialogue(interaction, questDirectoryPath);
@@ -144,9 +152,9 @@ export class NPCs {
       description: "The dialogue of this NPC",
       required: true,
     })
-      dialogue: string,
-      interaction: CommandInteraction): Promise<void> {
-    await sendText(interaction, npc, category, dialogue, questDirectoryPath);
+    dialogue: string,
+    interaction: CommandInteraction): Promise<void> {
+    await sendText(interaction, npc, category, dialogue, questDirectoryPath, "quest");
   }
 
   @Slash({ description: "Shows dialogue from Dream Warriors NPCs", name: "dream-warriors" })
@@ -159,7 +167,7 @@ export class NPCs {
       description: "The name of the NPC",
       required: true,
     })
-      npc: string,
+    npc: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findCategory(interaction, dreamWarriorsDirectoryPath);
@@ -169,7 +177,7 @@ export class NPCs {
       description: "The category of the dialogue",
       required: true,
     })
-      category: string,
+    category: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findDialogue(interaction, dreamWarriorsDirectoryPath);
@@ -179,9 +187,9 @@ export class NPCs {
       description: "The dialogue of this NPC",
       required: true,
     })
-      dialogue: string,
-      interaction: CommandInteraction): Promise<void> {
-    await sendText(interaction, npc, category, dialogue, dreamWarriorsDirectoryPath);
+    dialogue: string,
+    interaction: CommandInteraction): Promise<void> {
+    await sendText(interaction, npc, category, dialogue, dreamWarriorsDirectoryPath, "dream-warriors");
   }
 
   @Slash({ description: "Shows dialogue from Spirits NPCs" })
@@ -194,7 +202,7 @@ export class NPCs {
       description: "The name of the NPC",
       required: true,
     })
-      npc: string,
+    npc: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findCategory(interaction, spiritsDirectoryPath);
@@ -204,7 +212,7 @@ export class NPCs {
       description: "The category of the dialogue",
       required: true,
     })
-      category: string,
+    category: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findDialogue(interaction, spiritsDirectoryPath);
@@ -214,9 +222,9 @@ export class NPCs {
       description: "The dialogue of this NPC",
       required: true,
     })
-      dialogue: string,
-      interaction: CommandInteraction): Promise<void> {
-    await sendText(interaction, npc, category, dialogue, spiritsDirectoryPath);
+    dialogue: string,
+    interaction: CommandInteraction): Promise<void> {
+    await sendText(interaction, npc, category, dialogue, spiritsDirectoryPath, "spirits");
   }
 
   @Slash({ description: "Shows dialogue from miscellaneous NPCs" })
@@ -229,7 +237,7 @@ export class NPCs {
       description: "The name of the NPC",
       required: true,
     })
-      npc: string,
+    npc: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findCategory(interaction, miscDirectoryPath);
@@ -239,7 +247,7 @@ export class NPCs {
       description: "The category of the dialogue",
       required: true,
     })
-      category: string,
+    category: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findDialogue(interaction, miscDirectoryPath);
@@ -249,17 +257,18 @@ export class NPCs {
       description: "The dialogue of this NPC",
       required: true,
     })
-      dialogue: string,
-      interaction: CommandInteraction): Promise<void> {
-    await sendText(interaction, npc, category, dialogue, miscDirectoryPath);
+    dialogue: string,
+    interaction: CommandInteraction): Promise<void> {
+    await sendText(interaction, npc, category, dialogue, miscDirectoryPath, "misc");
   }
 }
 
-const npcEmbed = (npcName: string, npcText: string, dialogueCategory: string, npcContext: string, npcImage: string) => new EmbedBuilder()
+const npcEmbed = (npcName: string, npcText: string, dialogueCategory: string, npcContext: string, npcImage: string, npcCategory: string, username: string) => new EmbedBuilder()
   .setColor(embedColor)
   .setTitle(`${npcName} - ${dialogueCategory} - ${npcContext}`)
   .setDescription(npcText)
-  .setThumbnail(npcImage);
+  .setThumbnail(npcImage)
+  .setFooter({ text: `@${username} used /npcs ${npcCategory} name: ${npcName} category: ${dialogueCategory} dialogue: ${npcContext}` });
 
 const findCategory = async (interaction: AutocompleteInteraction, directoryPath: string) => {
   const enteredName = interaction.options.getString("name");
@@ -301,7 +310,7 @@ const findDialogue = async (interaction: AutocompleteInteraction, directoryPath:
   await interaction.respond(filtered);
 };
 
-const sendText = async (interaction: CommandInteraction, npcName: string, npcCategory: string, dialogue: string, directoryPath: string) => {
+const sendText = async (interaction: CommandInteraction, npcName: string, dialogueCategory: string, dialogue: string, directoryPath: string, npcCategory: string) => {
   const npcFile = JSON.parse(await fs.readFile(`${directoryPath}/NPC_${npcName.replaceAll(" ", "_")}.json`, "utf-8")) as {
     name: string;
     category: string;
@@ -312,11 +321,16 @@ const sendText = async (interaction: CommandInteraction, npcName: string, npcCat
     image: string;
   }[];
 
-  const npcDialogueDetails = npcFile.find((npc: { name: string; category: string; }) => capitalize(npc.name) === capitalize(dialogue) && capitalize(npc.category) === capitalize(npcCategory));
+  const npcDialogueDetails = npcFile.find((npc: { name: string; category: string; }) => capitalize(npc.name) === capitalize(dialogue) && capitalize(npc.category) === capitalize(dialogueCategory));
   if (!npcDialogueDetails) {
     return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("This dialogue does not exist.")] });
   }
 
   const npcImage = npcImagesFile.find((npc: { name: string; }) => capitalize(npc.name) === capitalize(npcName));
-  await interaction.reply({ embeds: [npcEmbed(npcName, npcDialogueDetails.text, npcDialogueDetails.category, npcDialogueDetails.name, npcImage!.image)] });
+  await interaction.reply({
+    ephemeral: true,
+    content: previewConfirmText,
+    embeds: [npcEmbed(npcName, npcDialogueDetails.text, npcDialogueDetails.category, npcDialogueDetails.name, npcImage!.image, npcCategory, interaction.user.username)],
+    components: [sendButtonComponent(sendCustomId, false)]
+  });
 };

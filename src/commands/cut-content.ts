@@ -1,6 +1,6 @@
-import { ApplicationCommandOptionType, AutocompleteInteraction, CommandInteraction, EmbedBuilder } from "discord.js";
-import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { capitalize, embedColor, errorEmbed } from "../utils.js";
+import { ApplicationCommandOptionType, AutocompleteInteraction, ButtonInteraction, CommandInteraction, EmbedBuilder } from "discord.js";
+import { ButtonComponent, Discord, Slash, SlashChoice, SlashOption } from "discordx";
+import { capitalize, embedColor, errorEmbed, previewConfirmText, sendButtonComponent } from "../utils.js";
 import { promises as fs } from "fs";
 
 const cutContentList = JSON.parse(await fs.readFile("./src/json/Cut_Content.json", "utf-8")) as {
@@ -10,9 +10,16 @@ const cutContentList = JSON.parse(await fs.readFile("./src/json/Cut_Content.json
   text: string;
 }[];
 const cutContentTypes = [...new Set(cutContentList.map(content => content.type))];
+const sendCustomId = "sendCutContent";
 
 @Discord()
 export class CutContent {
+  @ButtonComponent({ id: sendCustomId })
+  async sendButtonPressed(interaction: ButtonInteraction): Promise<void> {
+    await interaction.update({ components: [sendButtonComponent(sendCustomId, true)] });
+    await interaction.channel?.send({ embeds: [interaction.message.embeds[0]] });
+  }
+
   @Slash({ description: "Shows text from in-game cut content", name: "cut-content" })
   async cutContent(
     @SlashChoice(...cutContentTypes)
@@ -22,7 +29,7 @@ export class CutContent {
       description: "The type of the cut content",
       required: true,
     })
-      cutContentType: string,
+    cutContentType: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findCategory(interaction);
@@ -32,7 +39,7 @@ export class CutContent {
       description: "The category of the cut content",
       required: true,
     })
-      cutContentCategory: string,
+    cutContentCategory: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await findText(interaction);
@@ -42,23 +49,29 @@ export class CutContent {
       description: "The name of the cut content",
       required: true,
     })
-      cutContent: string,
-      interaction: CommandInteraction): Promise<void> {
+    cutContent: string,
+    interaction: CommandInteraction): Promise<void> {
     const cutContentDetails = cutContentList.find((content: { name: string; category: string; }) =>
       capitalize(content.name) === capitalize(cutContent) && capitalize(content.category) === capitalize(cutContentCategory));
     if (!cutContentDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("This cut content does not exist.")] });
     }
 
-    await interaction.reply({ embeds: [cutContentEmbed(cutContentDetails.name, cutContentDetails.category, cutContentDetails.text)] });
+    await interaction.reply({
+      ephemeral: true,
+      content: previewConfirmText,
+      embeds: [cutContentEmbed(cutContentDetails.name, cutContentDetails.category, cutContentDetails.text, cutContentType, interaction.user.username)],
+      components: [sendButtonComponent(sendCustomId, false)]
+    });
   }
 }
 
-const cutContentEmbed = (cutContentName: string, cutContentCategory: string, cutContentText: string) => new EmbedBuilder()
+const cutContentEmbed = (cutContentName: string, cutContentCategory: string, cutContentText: string, cutContentType: string, username: string) => new EmbedBuilder()
   .setColor(embedColor)
   .setTitle(`Cut content: ${cutContentName} - ${cutContentCategory}`)
   .setDescription(cutContentText)
-  .setFooter({ text: "Note: Cut content should not be considered canon." });
+  .setFields({ name: "\u200B", value: "***Note**: Cut content should not be considered canon.*" })
+  .setFooter({ text: `@${username} used /cut-content type: ${cutContentType} category: ${cutContentCategory} name: ${cutContentName}` });
 
 const findCategory = async (interaction: AutocompleteInteraction) => {
   const filtered = cutContentList

@@ -27,7 +27,7 @@ const formatContributors = (input: string[]) => {
   }
 
   return fields;
-}
+};
 
 const aboutEmbed = (botAvatar: string) => new EmbedBuilder()
   .setColor(embedColor)

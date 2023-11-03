@@ -1,6 +1,6 @@
-import { ApplicationCommandOptionType, AutocompleteInteraction, CommandInteraction, EmbedBuilder } from "discord.js";
-import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { capitalize, embedColor, errorEmbed, filteredCategory } from "../utils.js";
+import { ApplicationCommandOptionType, AutocompleteInteraction, ButtonInteraction, CommandInteraction, EmbedBuilder } from "discord.js";
+import { ButtonComponent, Discord, Slash, SlashChoice, SlashOption } from "discordx";
+import { capitalize, embedColor, errorEmbed, filteredCategory, previewConfirmText, sendButtonComponent } from "../utils.js";
 import { promises as fs } from "fs";
 
 const tabletImageURL = "https://i.imgur.com/UDZTJxF.png";
@@ -10,9 +10,16 @@ const believersList = JSON.parse(await fs.readFile("./src/json/Shrine_of_Believe
   text: string;
 }[];
 const believerRows = [...new Set(believersList.map(believer => believer.row))];
+const sendCustomId = "sendBeliever";
 
 @Discord()
 export class ShrineOfBelievers {
+  @ButtonComponent({ id: sendCustomId })
+  async sendButtonPressed(interaction: ButtonInteraction): Promise<void> {
+    await interaction.update({ components: [sendButtonComponent(sendCustomId, true)] });
+    await interaction.channel?.send({ embeds: [interaction.message.embeds[0]] });
+  }
+
   @Slash({ description: "Shows text from Shrine of Believers tablets", name: "shrine-of-believers" })
   async shrineOfBelievers(
     @SlashChoice(...believerRows)
@@ -22,7 +29,7 @@ export class ShrineOfBelievers {
       description: "The row of the Shrine of Believers tablet",
       required: true,
     })
-      believerRow: string,
+    believerRow: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await filteredCategory(interaction, "row", interaction.options.getString("row")!, believersList);
@@ -32,19 +39,25 @@ export class ShrineOfBelievers {
       description: "The name of the believer",
       required: true,
     })
-      believer: string,
-      interaction: CommandInteraction): Promise<void> {
+    believer: string,
+    interaction: CommandInteraction): Promise<void> {
     const believerDetails = believersList.find((believerStatue: { name: string; }) => capitalize(believerStatue.name) === capitalize(believer));
     if (!believerDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That believer does not exist.")] });
     }
 
-    await interaction.reply({ embeds: [believerEmbed(believerDetails.name, believerDetails.text)] });
+    await interaction.reply({
+      ephemeral: true,
+      content: previewConfirmText,
+      embeds: [believerEmbed(believerDetails.name, believerDetails.text, believerRow, interaction.user.username)],
+      components: [sendButtonComponent(sendCustomId, false)]
+    });
   }
 }
 
-const believerEmbed = (believerName: string, believerText: string) => new EmbedBuilder()
+const believerEmbed = (believerName: string, believerText: string, believerRow: string, username: string) => new EmbedBuilder()
   .setColor(embedColor)
   .setTitle(`Shrine of Believers: ${believerName}`)
   .setDescription(believerText)
-  .setThumbnail(tabletImageURL);
+  .setThumbnail(tabletImageURL)
+  .setFooter({ text: `@${username} used /shrine-of-believers row: ${believerRow} believer: ${believerName}` });

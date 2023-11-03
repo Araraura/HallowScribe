@@ -1,6 +1,6 @@
-import { ApplicationCommandOptionType, AutocompleteInteraction, CommandInteraction, EmbedBuilder } from "discord.js";
-import { Discord, Slash, SlashChoice, SlashOption } from "discordx";
-import { capitalize, embedColor, errorEmbed, filteredCategory } from "../utils.js";
+import { ApplicationCommandOptionType, AutocompleteInteraction, ButtonInteraction, CommandInteraction, EmbedBuilder } from "discord.js";
+import { ButtonComponent, Discord, Slash, SlashChoice, SlashOption } from "discordx";
+import { capitalize, embedColor, errorEmbed, filteredCategory, previewConfirmText, sendButtonComponent } from "../utils.js";
 import { promises as fs } from "fs";
 
 const charmList = JSON.parse(await fs.readFile("./src/json/Charms.json", "utf-8")) as {
@@ -11,9 +11,16 @@ const charmList = JSON.parse(await fs.readFile("./src/json/Charms.json", "utf-8"
   image: string;
 }[];
 const charmCategories = [...new Set(charmList.map(charm => charm.category))];
+const sendCustomId = "sendCharm";
 
 @Discord()
 export class Charms {
+  @ButtonComponent({ id: sendCustomId })
+  async sendButtonPressed(interaction: ButtonInteraction): Promise<void> {
+    await interaction.update({ components: [sendButtonComponent(sendCustomId, true)] });
+    await interaction.channel?.send({ embeds: [interaction.message.embeds[0]] });
+  }
+
   @Slash({ description: "Shows descriptions and effects for charms", name: "charms" })
   async charms(
     @SlashChoice(...charmCategories)
@@ -23,7 +30,7 @@ export class Charms {
       description: "The category of the charm",
       required: true,
     })
-      charmCategory: string,
+    charmCategory: string,
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
         await filteredCategory(interaction, "category", interaction.options.getString("category")!, charmList);
@@ -33,8 +40,8 @@ export class Charms {
       description: "The name of the charm",
       required: true,
     })
-      charm: string,
-      interaction: CommandInteraction): Promise<void> {
+    charm: string,
+    interaction: CommandInteraction): Promise<void> {
     const charmName = capitalize(charm);
     const charmDetails = charmList.find((charmDetail: { name: string; }) => capitalize(charmDetail.name) === charmName);
     if (!charmDetails) {
@@ -42,15 +49,26 @@ export class Charms {
     }
 
     if (charmName === "Wayward Compass") {
-      return void await interaction.reply({ embeds: [charmEmbed(charmDetails.name, charmDetails.text1, charmDetails.image)] });
+      return void await interaction.reply({
+        ephemeral: true,
+        content: previewConfirmText,
+        embeds: [charmEmbed(charmDetails.name, charmDetails.text1, charmDetails.image, charmCategory, interaction.user.username)],
+        components: [sendButtonComponent(sendCustomId, false)]
+      });
     }
 
-    await interaction.reply({ embeds: [charmEmbed(charmDetails.name, `${charmDetails.text1}\n\n${charmDetails.text2}`, charmDetails.image)] });
+    await interaction.reply({
+      ephemeral: true,
+      content: previewConfirmText,
+      embeds: [charmEmbed(charmDetails.name, `${charmDetails.text1}\n\n${charmDetails.text2}`, charmDetails.image, charmCategory, interaction.user.username)],
+      components: [sendButtonComponent(sendCustomId, false)]
+    });
   }
 }
 
-const charmEmbed = (charmName: string, charmText: string, charmImage: string) => new EmbedBuilder()
+const charmEmbed = (charmName: string, charmText: string, charmImage: string, charmCategory: string, username: string) => new EmbedBuilder()
   .setColor(embedColor)
   .setTitle(`Charm: ${charmName}`)
   .setDescription(charmText)
-  .setThumbnail(charmImage);
+  .setThumbnail(charmImage)
+  .setFooter({ text: `@${username} used /charms category: ${charmCategory} charm: ${charmName}` });
