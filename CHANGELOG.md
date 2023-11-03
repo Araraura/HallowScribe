@@ -1,3 +1,11 @@
+### 1.1.0 - November 3 2023
+- Messages now show a confirmation prompt to the user before sending the message to the channel. This was added to prevent sending the wrong message accidentally
+- - Information about the command that was used and the user who sent it will appear on the footer of the message
+- Fixed an issue where choosing `Godtuner in Godseeker’s workshop` in `/inspect-prompts` would crash the bot
+- Achievement categories are now called "Categories" instead of "Types"
+- Renamed `/decision-prompt` to `/decision-prompts`
+- Updated packages
+
 ### 1.0.5 - July 28 2023
 - Multiple links/sources can now be used in `/dev-comments`
 - Removed old Discord descriminators from credits
