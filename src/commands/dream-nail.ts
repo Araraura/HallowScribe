@@ -17,7 +17,10 @@ export class DreamNail {
   @ButtonComponent({ id: sendCustomId })
   async sendButtonPressed(interaction: ButtonInteraction): Promise<void> {
     await interaction.update({ components: [sendButtonComponent(sendCustomId, true)] });
-    await interaction.channel?.send({ embeds: [interaction.message.embeds[0]] });
+    if (!interaction.inGuild()) {
+      return void await interaction.user.send({ embeds: [interaction.message.embeds[0]] });
+    }
+    return void await interaction.channel?.send({ embeds: [interaction.message.embeds[0]] });
   }
 
   @Slash({ description: "Shows text from Dream Nail interactions", name: "dream-nail" })
