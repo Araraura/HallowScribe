@@ -33,8 +33,7 @@ export class DevNotes {
     })
       note: string,
       interaction: CommandInteraction): Promise<void> {
-    const noteName = capitalize(note);
-    const noteDetails = devNotesList.find((devNote: { name: string; }) => capitalize(devNote.name) === noteName);
+    const noteDetails = devNotesList.find((devNote: { name: string; }) => capitalize(devNote.name) === capitalize(note));
     if (!noteDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That dev note does not exist.")] });
     }

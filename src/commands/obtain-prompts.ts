@@ -43,8 +43,7 @@ export class ObtainPrompts {
     })
       textType: string,
       interaction: CommandInteraction): Promise<void> {
-    const promptName = capitalize(obtainable);
-    const promptDetails = obtainList.find((obtainPrompt: { name: string; }) => capitalize(obtainPrompt.name) === promptName);
+    const promptDetails = obtainList.find((obtainPrompt: { name: string; }) => capitalize(obtainPrompt.name) === capitalize(obtainable));
     if (!promptDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("This prompt does not exist.")] });
     }

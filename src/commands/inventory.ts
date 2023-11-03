@@ -34,8 +34,7 @@ export class Inventory {
     })
       item: string,
       interaction: CommandInteraction): Promise<void> {
-    const itemName = capitalize(item);
-    const itemDetails = inventoryList.find((inventoryItem: { name: string; }) => capitalize(inventoryItem.name) === itemName);
+    const itemDetails = inventoryList.find((inventoryItem: { name: string; }) => capitalize(inventoryItem.name) === capitalize(item));
     if (!itemDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That Inventory item does not exist.")] });
     }

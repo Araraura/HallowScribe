@@ -34,8 +34,7 @@ export class Achievements {
     })
       achievement: string,
       interaction: CommandInteraction): Promise<void> {
-    const achievementName = capitalize(achievement);
-    const achievementDetails = achievementList.find((achievementDetail: { name: string; }) => capitalize(achievementDetail.name) === achievementName);
+    const achievementDetails = achievementList.find((achievementDetail: { name: string; }) => capitalize(achievementDetail.name) === capitalize(achievement));
     if (!achievementDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That achievement does not exist.")] });
     }

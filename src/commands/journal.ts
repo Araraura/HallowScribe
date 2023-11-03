@@ -21,7 +21,7 @@ export class journal {
   async journal(
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
-        const filtered = journalList.filter((el: { name: string; }) => capitalize(el.name).startsWith(capitalize(interaction.options.getFocused())));
+        const filtered = journalList.filter((journalEntry: { name: string; }) => capitalize(journalEntry.name).startsWith(capitalize(interaction.options.getFocused())));
         await interaction.respond(
           filtered.map(entry => ({ name: entry.name, value: entry.name })).slice(0, 25),
         );
@@ -41,8 +41,7 @@ export class journal {
     })
       textType: string,
       interaction: CommandInteraction): Promise<void> {
-    const enteredEntryName = capitalize(entryName);
-    const journalDetails = journalList.find((journalEntry: { name: string; }) => capitalize(journalEntry.name) === enteredEntryName);
+    const journalDetails = journalList.find((journalEntry: { name: string; }) => capitalize(journalEntry.name) === capitalize(entryName));
     if (!journalDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That journal entry does not exist.")] });
     } else if ((!journalDetails.note && textType === "Hunter's notes") || (!journalDetails.dreamnail && textType === "Dream Nail")) {
