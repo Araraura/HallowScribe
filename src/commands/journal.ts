@@ -42,7 +42,7 @@ export class journal {
       textType: string,
       interaction: CommandInteraction): Promise<void> {
     const enteredEntryName = capitalize(entryName);
-    const journalDetails = journalList.find((c: { name: string; }) => capitalize(c.name) === enteredEntryName);
+    const journalDetails = journalList.find((journalEntry: { name: string; }) => capitalize(journalEntry.name) === enteredEntryName);
     if (!journalDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That journal entry does not exist.")] });
     } else if ((!journalDetails.note && textType === "Hunter's notes") || (!journalDetails.dreamnail && textType === "Dream Nail")) {

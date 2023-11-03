@@ -36,7 +36,7 @@ export class Charms {
       charm: string,
       interaction: CommandInteraction): Promise<void> {
     const charmName = capitalize(charm);
-    const charmDetails = charmList.find((c: { name: string; }) => capitalize(c.name) === charmName);
+    const charmDetails = charmList.find((charmDetail: { name: string; }) => capitalize(charmDetail.name) === charmName);
     if (!charmDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That charm does not exist.")] });
     }

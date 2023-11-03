@@ -77,7 +77,7 @@ const findText = async (interaction: AutocompleteInteraction) => {
   const filtered = cutContentList
     .filter(cutContentText => cutContentText.type === ChosenType && capitalize(cutContentText.category) === ChosenCategory)
     .map(cutContentText => ({ name: cutContentText.name, value: cutContentText.name }))
-    .filter(c => capitalize(c.name).startsWith(capitalize(interaction.options.getFocused())))
+    .filter(cut => capitalize(cut.name).startsWith(capitalize(interaction.options.getFocused())))
     .slice(0, 25);
 
   await interaction.respond(filtered);

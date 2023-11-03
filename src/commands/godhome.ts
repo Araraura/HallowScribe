@@ -39,7 +39,7 @@ export class Godhome {
       pantheonOrStatue: string,
       interaction: CommandInteraction): Promise<void> {
     const pantheonOrDoorName = capitalize(pantheonOrStatue);
-    const godhomeDetails = godhomeList.find((c: { name: string; }) => capitalize(c.name) === pantheonOrDoorName);
+    const godhomeDetails = godhomeList.find((godhomeObject: { name: string; }) => capitalize(godhomeObject.name) === pantheonOrDoorName);
     if (!godhomeDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("This Pantheon or statue does not exist.")] });
     }

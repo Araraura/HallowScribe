@@ -35,7 +35,7 @@ export class DecisionPrompts {
       decision: string,
       interaction: CommandInteraction): Promise<void> {
     const decisionPromptName = capitalize(decision);
-    const decisionDetails = decisionList.find((c: { name: string; }) => capitalize(c.name) === decisionPromptName);
+    const decisionDetails = decisionList.find((decisionPrompt: { name: string; }) => capitalize(decisionPrompt.name) === decisionPromptName);
     if (!decisionDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That decision prompt does not exist.")] });
     }

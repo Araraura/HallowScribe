@@ -35,7 +35,7 @@ export class DevComments {
     comment: string,
     interaction: CommandInteraction): Promise<void> {
     const commentName = capitalize(comment);
-    const commentDetails = devCommentsList.find((c: { name: string; }) => capitalize(c.name) === commentName);
+    const commentDetails = devCommentsList.find((devComment: { name: string; }) => capitalize(devComment.name) === commentName);
     if (!commentDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That dev comment does not exist.")] });
     }

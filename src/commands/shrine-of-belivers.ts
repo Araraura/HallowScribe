@@ -35,7 +35,7 @@ export class ShrineOfBelievers {
       believer: string,
       interaction: CommandInteraction): Promise<void> {
     const believerName = capitalize(believer);
-    const believerDetails = believersList.find((c: { name: string; }) => capitalize(c.name) === believerName);
+    const believerDetails = believersList.find((believerStatue: { name: string; }) => capitalize(believerStatue.name) === believerName);
     if (!believerDetails) {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That believer does not exist.")] });
     }
