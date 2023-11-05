@@ -29,7 +29,7 @@ const helpEmbed = (botAvatar: string) => new EmbedBuilder()
     { name: "• Text from obtainable items/abilities", value: "`/obtain-prompts [Category*] [Obtainable*] [Text]`" },
     { name: "• Text from inspecting various objects", value: "`/inspect-prompts [Prompt*]`" },
     { name: "• Text from using the Dream Nail on Whispering Roots", value: "`/whispering-roots [Name*]`" },
-    { name: "• Achievements' descriptions", value: "`/achievements [Type*] [Achievement*]`" },
+    { name: "• Achievements' descriptions", value: "`/achievements [Category*] [Achievement*]`" },
     { name: "• Item descriptions in the Inventory", value: "`/inventory [Category*] [Item*]`" },
     { name: "• Text from in-game decision prompts", value: "`/decision-prompts [Category*] [Decision*]`" },
     { name: "• Text from Shrine of Believers tablets", value: "`/shrine-of-believers [Row*] [Believer*]`" },

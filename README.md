@@ -41,7 +41,7 @@ Note: The JSON files containing the text from Hollow Knight are not included in 
 
 - `/whispering-roots [Name*]` Text from using the Dream Nail on Whispering Roots
 
-- `/achievements [Type*] [Achievement*]` Text from in-game achievements description
+- `/achievements [Category*] [Achievement*]` Text from in-game achievements description
 
 - `/inventory [Category*] [Item*]` Text from Inventory items/abilities
 
