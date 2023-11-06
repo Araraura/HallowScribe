@@ -51,19 +51,15 @@ export class Charms {
       return void await interaction.reply({ ephemeral: true, embeds: [errorEmbed("That charm does not exist.")] });
     }
 
-    if (charmName === "Wayward Compass") {
-      return void await interaction.reply({
-        ephemeral: true,
-        content: previewConfirmText,
-        embeds: [charmEmbed(charmDetails.name, charmDetails.text1, charmDetails.image, charmCategory, interaction.user.username)],
-        components: [sendButtonComponent(sendCustomId, false)]
-      });
-    }
-
     await interaction.reply({
       ephemeral: true,
       content: previewConfirmText,
-      embeds: [charmEmbed(charmDetails.name, `${charmDetails.text1}\n\n${charmDetails.text2}`, charmDetails.image, charmCategory, interaction.user.username)],
+      embeds: [charmEmbed(
+        charmDetails.name,
+        charmName === "Wayward Compass" ? charmDetails.text1 : `${charmDetails.text1}\n\n${charmDetails.text2}`,
+        charmDetails.image,
+        charmCategory,
+        interaction.user.username)],
       components: [sendButtonComponent(sendCustomId, false)]
     });
   }
