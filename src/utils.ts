@@ -10,7 +10,7 @@ const capitalize = (string: string) => {
 };
 
 const filteredCategory = async (interaction: AutocompleteInteraction, categoryName: string, chosenCategory: string, itemList: any) => {
-  const filtered = itemList.filter((el: any) => el[categoryName] === chosenCategory && capitalize(el.name).startsWith(capitalize(interaction.options.getFocused())));
+  const filtered = itemList.filter((el: any) => el[categoryName] === chosenCategory && capitalize(el.name).includes(capitalize(interaction.options.getFocused())));
   await interaction.respond(filtered.map((el: any) => ({ name: el.name, value: el.name })).slice(0, 25));
 };
 

@@ -1,3 +1,6 @@
+### 1.1.2 - January 22 2024
+- Replaced the method of looking up texts to include searching from anywhere in the text, rather than only at the start of it.
+
 ### 1.1.1 - November 3 2023
 - Fix a bug where users wouldn't recieve a message after clicking "Send this message" in DMs
 - Removed unused intent

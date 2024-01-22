@@ -31,7 +31,7 @@ export class journal {
   async journal(
     @SlashOption({
       autocomplete: async (interaction: AutocompleteInteraction) => {
-        const filtered = journalList.filter((journalEntry: { name: string; }) => capitalize(journalEntry.name).startsWith(capitalize(interaction.options.getFocused())));
+        const filtered = journalList.filter((journalEntry: { name: string; }) => capitalize(journalEntry.name).includes(capitalize(interaction.options.getFocused())));
         await interaction.respond(
           filtered.map(entry => ({ name: entry.name, value: entry.name })).slice(0, 25),
         );

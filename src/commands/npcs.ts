@@ -287,7 +287,7 @@ const findCategory = async (interaction: AutocompleteInteraction, directoryPath:
   }[];
 
   const categories = [...new Set(npcFile.map(npc => npc.category))];
-  const filtered = categories.filter(c => capitalize(c).startsWith(capitalize(interaction.options.getFocused())));
+  const filtered = categories.filter(c => capitalize(c).includes(capitalize(interaction.options.getFocused())));
   await interaction.respond(filtered.map(c => ({ name: c, value: c })).slice(0, 25));
 };
 
@@ -307,7 +307,7 @@ const findDialogue = async (interaction: AutocompleteInteraction, directoryPath:
   const filtered = npcFile
     .filter(npcDialogue => capitalize(npcDialogue.category) === chosenCategory)
     .map(npcDialogue => ({ name: npcDialogue.name, value: npcDialogue.name }))
-    .filter(c => capitalize(c.name).startsWith(capitalize(interaction.options.getFocused())))
+    .filter(c => capitalize(c.name).includes(capitalize(interaction.options.getFocused())))
     .slice(0, 25);
 
   await interaction.respond(filtered);

@@ -79,7 +79,7 @@ const cutContentEmbed = (cutContentName: string, cutContentCategory: string, cut
 const findCategory = async (interaction: AutocompleteInteraction) => {
   const filtered = cutContentList
     .filter(cutContent => cutContent.type === interaction.options.getString("type"));
-  const categories = [...new Set(filtered.map(content => content.category))].filter(c => capitalize(c).startsWith(capitalize(interaction.options.getFocused())));
+  const categories = [...new Set(filtered.map(content => content.category))].filter(c => capitalize(c).includes(capitalize(interaction.options.getFocused())));
   await interaction.respond(categories.map(category => ({ name: category, value: category })).slice(0, 25));
 };
 
@@ -93,7 +93,7 @@ const findText = async (interaction: AutocompleteInteraction) => {
   const filtered = cutContentList
     .filter(cutContentText => cutContentText.type === ChosenType && capitalize(cutContentText.category) === ChosenCategory)
     .map(cutContentText => ({ name: cutContentText.name, value: cutContentText.name }))
-    .filter(cut => capitalize(cut.name).startsWith(capitalize(interaction.options.getFocused())))
+    .filter(cut => capitalize(cut.name).includes(capitalize(interaction.options.getFocused())))
     .slice(0, 25);
 
   await interaction.respond(filtered);
